@@ -3,18 +3,20 @@ package main
 import (
 	"fmt"
   "net/http"
+  "github.com/gorilla/mux"
 )
 
 func main()  {
-  http.HandleFunc("/", handler)
-  http.HandleFunc("/resume", resume)
-  http.ListenAndServe(":7996", nil)
+  r := mux.NewRouter()
+  r.HandleFunc("/hello", handler).Methods("GET")
+  r.HandleFunc("/portfolio", portfolio).Methods("GET")
+  http.ListenAndServe(":7996", r)
 }
 
 func handler(w http.ResponseWriter, r *http.Request)  {
-  fmt.Fprintf(w, "Written in go!")
+  fmt.Fprintf(w, "Himmath na haarna, saahas na chodna!")
 }
 
-func resume(w http.ResponseWriter, r *http.Request)  {
-  fmt.Fprintf(w, "Resume will be here, coming soon.")
+func portfolio(w http.ResponseWriter, r *http.Request)  {
+  fmt.Fprintf(w, "Portfolio will be here, coming soon.")
 }
